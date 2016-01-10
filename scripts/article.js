@@ -1,6 +1,6 @@
-var articles = [];
+var jobs = [];
 
-function Article (opts) {
+function Job (opts) {
   this.author = opts.author;
   this.authorUrl = opts.authorUrl;
   this.title = opts.title;
