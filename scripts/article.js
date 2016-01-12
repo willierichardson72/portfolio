@@ -1,4 +1,4 @@
-var jobs = [];
+var jobs = []
 
 function Job (opts) {
   this.company = opts.company;
@@ -9,7 +9,9 @@ function Job (opts) {
 }
 
 Job.prototype.toHtml = function() {
-  var $newJob = $('article.template').clone();
+  var Job = Handlebars.compile($('article.template').text());
+
+  this
   $newArticle.removeClass('template');
   if (!this.publishedOn) {
     $newJob.addClass('draft');
