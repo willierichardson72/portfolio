@@ -3,31 +3,34 @@
   <head>
     <meta charset="UTF-8">
     <title>Blog</title>
-    <link rel="stylesheet" href="vendor/styles/normalize.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/modules.css">
+    <link rel="stylesheet" href="styles/module.css">
+    <link rel="stylesheet" href="styles/layout.css">
+
+    <script id="job-template" type="text/x-handlebars-template">
   </head>
   <body>
     <main>
         <header>
           <h1>
-            William's Portfolio
+            William J. Richardson
           </h1>
           <p>Successes and Aspirations</p>
         </header>
         <nav>
           <ul>
-            <li><a href="https://www.linkedin.com/in/william-richardson-32799039"></a></li>
-            <li><a href="http://www.transplantliving.org/william-richardson/"></a></li>
+            <li><a href="https://www.linkedin.com/in/william-richardson-32799039">Employment History</a></li>
+            <li><a href="http://www.transplantliving.org/william-richardson/">Social History</a></li>
           </ul>
         </nav>
-        <section id="articles">
+        <section id="jobs">
           <article class="template" data-category="cat">
             <header>
               <h1>Title</h1>
-              <div class="byline">
-                By <address><a href="">Author Name</a></address>
-                published <time pubdate datetime="2000-01-01">Publish Time</time>
+              <div class="Personal Interests">
+                <address><a href=http://www.letsrun.com/>Favorite Running Site</a></address>
               </div>
             </header>
             <section class="article-body"></section>
@@ -38,7 +41,7 @@
     <footer>
     </footer>
      <script src = "scripts/article.js"></script>
-     <script src = "scripts/blogArticle.js"></script>
+     <script src = "scripts/blogArticles.js"></script>
      <script src = "scripts/portfolio.js"></script>
      <script src = "https://code.jquery.com/jquery-2.1.4.min.js"></script>
      <script src = "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>

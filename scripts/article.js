@@ -1,22 +1,21 @@
 var jobs = [];
 
 function Job (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
+  this.company = opts.company;
   this.title = opts.title;
-  this.category = opts.category;
-  this.body = opts.body;
-  this.publishedOn = opts.publishedOn;
+  this.description = opts.description;
+  this.dates= opts.dates;
+  this.location = opts.location;
 }
 
-Article.prototype.toHtml = function() {
-  var $newArticle = $('article.template').clone();
+Job.prototype.toHtml = function() {
+  var $newJob = $('article.template').clone();
   $newArticle.removeClass('template');
   if (!this.publishedOn) {
-    $newArticle.addClass('draft');
+    $newJob.addClass('draft');
   }
-  $newArticle.attr('data-category', this.category);
-  $newArticle.attr('data-author', this.author)
+  $newJob.attr('data-category', this.category);
+  $newJob.attr('data-author', this.author)
 
   $newArticle.find('.byline a').html(this.author);
   $newArticle.find('.byline a').attr('href', this.authorUrl);
@@ -40,3 +39,5 @@ rawData.forEach(function(ele) {
 articles.forEach(function(a){
   $('#articles').append(a.toHtml())
 });
+
+function randomNumber(upper) {}
