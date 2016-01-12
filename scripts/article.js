@@ -10,7 +10,7 @@ function Job (opts) {
 
 Job.prototype.toHtml = function() {
   var Job = Handlebars.compile($('article.template').text());
-
+atom
   this
   $newArticle.removeClass('template');
   if (!this.publishedOn) {
