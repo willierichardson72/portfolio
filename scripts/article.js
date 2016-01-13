@@ -1,5 +1,4 @@
-var jobs = []
-
+function (module) {
 function Job (opts) {
   this.company = opts.company;
   this.title = opts.title;
@@ -8,10 +7,19 @@ function Job (opts) {
   this.location = opts.location;
 }
 
+Job.all = [];
+
 Job.prototype.toHtml = function() {
   var Job = Handlebars.compile($('article.template').text());
-atom
-  this
+
+  return template(this);
+};
+
+Job.loadAll = function(rawData) {
+  rawData.sort(function)(a,b) {
+    return
+  }
+}
   $newArticle.removeClass('template');
   if (!this.publishedOn) {
     $newJob.addClass('draft');
