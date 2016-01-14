@@ -5,23 +5,27 @@
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/icons.css">
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/module.css">
     <link rel="stylesheet" href="styles/layout.css">
 
-    <script id="job-template" type="text/x-handlebars-template"></script>
-  </head>
+    <script id="entries-template" type="text/x-handlebars-template"></script>
+     <article class="clearfix" data-subject="{{subject}}" data-date="{{date}}">
   <body>
     <main>
         <header>
           <h1>
             William J. Richardson
           </h1>
-          <p>Successes and Aspirations</p>
+          <p>An Aspiring Software Developer</p>
         </header>
-        <nav>
+        <nav class="main-nav"
+          <div class="icon-menu">
           <ul>
-            <li><a href="https://www.linkedin.com/in/william-richardson-32799039">Employment History</a></li>
+            <li class="tab" data-content="entries"><a href="#content">
+            <li><a href="#">
+            <li><a href="https://www.linkedin.com/in/william-richardson-32799039"></a></li>
             <li><a href="http://www.transplantliving.org/william-richardson/">Social History</a></li>
           </ul>
         </nav>

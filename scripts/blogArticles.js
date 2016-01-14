@@ -1,6 +1,6 @@
 var rawData = [
   {
-    title:       'Bacon Ipsum',
+    title:       'Running'
     category:    'food',
     author:      'Kevin Bacon',
     authorUrl:   'http://www.imdb.com/name/nm0000102/',
