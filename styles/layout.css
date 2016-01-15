@@ -1,0 +1,12 @@
+body {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 30px;
+  background-color: silver;
+}
+h1 {
+  text-align: center;
+}
+li {
+  list-style-type: none;
+}
