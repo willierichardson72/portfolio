@@ -1,3 +1,4 @@
+(function (module) {
 function Diary (entries) {
   this.date = entries.date;
   this.subject = entries.subject;
@@ -21,22 +22,34 @@ Diary.loadAll = function(entryData) {
     return (new Date(b.date)) - (new Date(a.date));
   });
 
-entryData.forEach(function(ele) {
-  Diary.all.push(new Diary(ele));
- })
-}
+Diary.all = rawData.map(function(ele) {
+      return new Diary(ele);
+    });
+  };
 
-Diary.fetchAll = function() {
+Diary.fetchAll = function(callback) {
   if (localStorage.rawData) {
 
   Diary.loadAll(JSON.parse(localStorage.entryData));
   diaryView.initIndexPage();
-
-} else {
+ } else {
 $.getJSON('entryData.json', function(entryData) {
   Article.loadAll(entryData);
   localStorage.rawData = JSON.stringify(entryData);
-  diaryView.initIndexPage();
+  callback();
   });
- }
-}
+ };
+};
+Article.numWordsAll = function() {
+  return Article.all.map(function(article) {
+    var words = article.body.split(' ');
+    return words.length;
+  }).reduce(function(a, b) {
+    return a+b
+    console.log(a+b)
+  })
+};
+
+module.Diary = Diary
+})(window);
+console.log(Diary.all)
