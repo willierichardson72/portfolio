@@ -7,40 +7,40 @@
       if (!$(this).hasClass('template')) {
         var val = $(this).find('address a').text();
         var optionTag = '<option value="' + val + '">' + val + '</option>';
-        $('#author-filter').append(optionTag);
+        $('#subject-filter').append(optionTag);
 
-        val = $(this).attr('data-category');
+        val = $(this).attr('date-category');
         optionTag = '<option value="' + val + '">' + val + '</option>';
-        if ($('#category-filter option[value="' + val + '"]').length === 0) {
-          $('#category-filter').append(optionTag);
+        if ($('#date-filter option[value="' + val + '"]').length === 0) {
+          $('#date-filter').append(optionTag);
         }
       }
     });
   };
 
-  articleView.handleAuthorFilter = function() {
-    $('#author-filter').on('change', function() {
+  articleView.handleSubjectFilter = function() {
+    $('#subject-filter').on('change', function() {
       if ($(this).val()) {
         $('article').hide();
-        $('article[data-author="' + $(this).val() + '"]').fadeIn();
+        $('article[data-subject="' + $(this).val() + '"]').fadeIn();
       } else {
         $('article').fadeIn();
         $('article.template').hide();
       }
-      $('#category-filter').val('');
+      $('#subject-filter').val('');
     });
   };
 
-  articleView.handleCategoryFilter = function() {
-    $('#category-filter').on('change', function() {
+  articleView.handleDateFilter = function() {
+    $('#date-filter').on('change', function() {
       if ($(this).val()) {
         $('article').hide();
-        $('article[data-category="' + $(this).val() + '"]').fadeIn();
+        $('article[date-category="' + $(this).val() + '"]').fadeIn();
       } else {
         $('article').fadeIn();
         $('article.template').hide();
       }
-      $('#author-filter').val('');
+      $('#date-filter').val('');
     });
   };
 
@@ -79,15 +79,12 @@
 
     // Instantiate an article based on what's in the form fields:
     article = new Article({
-      title: $('#article-title').val(),
-      author: $('#article-author').val(),
-      authorUrl: $('#article-author-url').val(),
-      category: $('#article-category').val(),
-      body: $('#article-body').val(),
-      publishedOn: $('#article-published:checked').length ? util.today() : null
+      date: $('#entries-date').val(),
+      subject: $('#entries-subject').val(),
+      content: $('#entries-content').val(),
     });
 
-    $('#articles').append(article.toHtml());
+    $('#entries').append(article.toHtml());
 
     $('pre code').each(function(i, block) {
       hljs.highlightBlock(block);
@@ -95,13 +92,13 @@
 
     // Export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
     $('#export-field').show();
-    $('#article-json').val(JSON.stringify(article) + ',');
+    $('#entries-json').val(JSON.stringify(article) + ',');
   };
 
   articleView.initIndexPage = function() {
     console.log(Article.all)
     Article.all.forEach(function(a){
-      $('#articles').append(a.toHtml())
+      $('#entries').append(a.toHtml())
     });
 
     articleView.populateFilters();

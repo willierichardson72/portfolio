@@ -1,8 +1,8 @@
 (function (module) {
-function Diary (entries) {
-  this.date = entries.date;
-  this.subject = entries.subject;
-  this.content = entries.content;
+ function Diary (entries) {
+  Object.keys(entries).forEach(function(e, index.keys) {
+   this[e] = opts[e];
+ },this);
 }
 
 Diary.all = []
