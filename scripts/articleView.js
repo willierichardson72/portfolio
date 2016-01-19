@@ -1,90 +1,91 @@
 (function(module) {
 
-  var diaryView = {};
+  var entryView = {};
 
-  diaryView.populateFilters = function() {
-    $('en').each(function() {
+  entryView.populateFilters = function() {
+    $('entry').each(function() {
       if (!$(this).hasClass('template')) {
         var val = $(this).find('address a').text();
         var optionTag = '<option value="' + val + '">' + val + '</option>';
-        $('#subject-filter').append(optionTag);
+        if($('#publishedOn-filter option[value="' + val + '"]').length === 0) {
+         $('#publishedOn-filter').append(optionTag);
 
         val = $(this).attr('date-category');
         optionTag = '<option value="' + val + '">' + val + '</option>';
-        if ($('#date-filter option[value="' + val + '"]').length === 0) {
-          $('#date-filter').append(optionTag);
+        if ($('#subject-filter option[value="' + val + '"]').length === 0) {
+          $('#subject-filter').append(optionTag);
         }
       }
     });
   };
 
-  articleView.handleSubjectFilter = function() {
+  entryView.handleSubjectFilter = function() {
     $('#subject-filter').on('change', function() {
       if ($(this).val()) {
-        $('article').hide();
-        $('article[data-subject="' + $(this).val() + '"]').fadeIn();
+        $('entry').hide();
+        $('entry[data-subject="' + $(this).val() + '"]').fadeIn();
       } else {
-        $('article').fadeIn();
-        $('article.template').hide();
+        $('entry').fadeIn();
+        $('entry.template').hide();
       }
       $('#subject-filter').val('');
     });
   };
 
-  articleView.handleDateFilter = function() {
-    $('#date-filter').on('change', function() {
+  entryView.handlepublishedOnFilter = function() {
+    $('#publishedOn-filter').on('change', function() {
       if ($(this).val()) {
-        $('article').hide();
-        $('article[date-category="' + $(this).val() + '"]').fadeIn();
+        $('entry').hide();
+        $('entry[publishedOn-category="' + $(this).val() + '"]').fadeIn();
       } else {
-        $('article').fadeIn();
-        $('article.template').hide();
+        $('entry').fadeIn();
+        $('entry.template').hide();
       }
-      $('#date-filter').val('');
+      $('#pusblishedOn-filter').val('');
     });
   };
 
-  articleView.handleMainNav = function() {
-    $('.main-nav').on('click', '.tab', function(e) {
-      $('.tab-content').hide();
-      $('#' + $(this).data('content')).fadeIn();
-    });
+  // articleView.handleMainNav = function() {
+  //   $('.main-nav').on('click', '.tab', function(e) {
+  //     $('.tab-content').hide();
+  //     $('#' + $(this).data('content')).fadeIn();
+  //   });
+  //
+  //   $('.main-nav .tab:first').click();
+  // };
 
-    $('.main-nav .tab:first').click();
-  };
+  entryView.setTeasers = function() {
+    $('.entry-content *:nth-of-type(n+2)').hide();
 
-  articleView.setTeasers = function() {
-    $('.article-body *:nth-of-type(n+2)').hide();
-
-    $('#articles').on('click', 'a.read-on', function(e) {
+    $('#entries').on('click', 'a.read-on', function(e) {
       e.preventDefault();
       $(this).parent().find('*').fadeIn();
       $(this).hide();
     });
   };
 
-  articleView.initNewArticlePage = function() {
+  entryView.initNewEntryPage = function() {
     $('.tab-content').show();
     $('#export-field').hide();
-    $('#article-json').on('focus', function(){
+    $('#-json').on('focus', function(){
       this.select();
     });
 
-    $('#new-form').on('change', 'input, textarea', articleView.create);
+    $('#new-form').on('change', 'input, textarea', entryView.create);
   };
 
-  articleView.create = function() {
-    var article;
-    $('#articles').empty();
+  entryView.create = function() {
+    var entry;
+    $('#entries').empty();
 
     // Instantiate an article based on what's in the form fields:
-    article = new Article({
-      date: $('#entries-date').val(),
+    entry = new Entry({
+      date: $('#entries-publishedOn').val(),
       subject: $('#entries-subject').val(),
       content: $('#entries-content').val(),
     });
 
-    $('#entries').append(article.toHtml());
+    $('#entries').append(entry.toHtml());
 
     $('pre code').each(function(i, block) {
       hljs.highlightBlock(block);
@@ -95,34 +96,18 @@
     $('#entries-json').val(JSON.stringify(article) + ',');
   };
 
-  articleView.initIndexPage = function() {
+  entryView.initIndexPage = function() {
     console.log(Article.all)
-    Article.all.forEach(function(a){
+    Entry.all.forEach(function(a){
       $('#entries').append(a.toHtml())
     });
 
-    articleView.populateFilters();
-    articleView.handleCategoryFilter();
-    articleView.handleAuthorFilter();
-    articleView.handleMainNav();
-    articleView.setTeasers();
+    entryView.populateFilters();
+    entryView.handleCategoryFilter();
+    entryView.handleAuthorFilter();
+    entryView.handleMainNav();
+    entryView.setTeasers();
   };
 
-  articleView.initAdminPage = function() {
-    // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
-    var template; // = ...?
-
-    // DONE: We use `forEach` here because we are relying on the side-effects of the callback function:
-    // appending to the DOM.
-    // The callback is not required to return anything.
-    Article.numWordsByAuthor().forEach(function(stat) {
-      $('.author-stats').append(template(stat));
-    })
-
-    // DONE: Simply write the correct values to the page:
-    $('#blog-stats .articles').text(Article.all.length);
-    $('#blog-stats .words').text(Article.numWordsAll());
-  };
-
-  module.articleView = articleView;
+  module.entryView = entryView;
 })(window);

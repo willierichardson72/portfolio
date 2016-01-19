@@ -1,55 +1,105 @@
 (function (module) {
- function Diary (entries) {
-  Object.keys(entries).forEach(function(e, index.keys) {
-   this[e] = opts[e];
+ function Entry (info) {
+  Object.keys(entries).forEach(function(e, index, keys) {
+   this[e] = info[e];
  },this);
 }
 
-Diary.all = []
+Entry.all = []
 
-Diary.prototype.toHtml = function() {
+Entry.prototype.toHtml = function() {
   var template = handlebars.compile($('#entries-template').text());
 
-  this.daysAgo = parseInt((new Date() - new Date(this.date))/60/60/24/1000);
-  this.date = this.date ? 'published' + this.daysAgo + 'days ago' : '(draft)';
+  this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+  this.publishStatus = this.publishedOn ? 'published' + this.daysAgo + 'days ago' : '(draft)';
   this.content = marked(this.content);
 
   return template(this);
 };
 
-Diary.loadAll = function(entryData) {
-  rawData.sort(function(a,b) {
-    return (new Date(b.date)) - (new Date(a.date));
-  });
+Entry.createTable = function(callback) {
+    webDB.execute(
+      'CREATE TABLE IF NOT EXISTS entries (' +
+        'id INTEGER PRIMARY KEY, ' +
+        'publishedOn VARCHAR(255) NOT NULL, ' +
+        'subject VARCHAR(255) NOT NULL, ' +
+        'content VARCHAR (255);',
+      function(result) {
+        console.log('Successfully set up the entries table.', result);
+        if (callback) callback();
+      }
+    );
+  };
 
-Diary.all = rawData.map(function(ele) {
-      return new Diary(ele);
+  Entry.truncateTable = function(callback) {
+    webDB.execute(
+      'DELETE FROM entries;',
+      callback
+    );
+  };
+
+  Entry.prototype.insertRecord = function(callback) {
+    webDB.execute(
+      [
+        {
+          'sql': 'INSERT INTO entries (publishedOn, subject, content) VALUES (?, ?, ?);',
+          'data': [this.publishedOn, this.subject, this.content],
+        }
+      ],
+      callback
+    );
+  };
+
+  Entry.prototype.deleteRecord = function(callback) {
+    webDB.execute(
+      [
+        {
+          'sql': 'DELETE FROM articles WHERE id = ?;',
+          'data': [this.id]
+        }
+      ],
+      callback
+    );
+  };
+
+  Entry.prototype.updateRecord = function(callback) {
+    webDB.execute(
+      [
+        {
+          'sql': 'UPDATE articles SET publishedOn = ?, subject = ?, content = ?, WHERE id = ?;',
+          'data': [this.publishedOn, this.subject, this.content, this.id]
+        }
+      ],
+      callback
+    );
+  };
+
+  Entry.loadAll = function(rows) {
+    Article.all = rows.map(function(ele) {
+      return new Article(ele);
     });
   };
 
-Diary.fetchAll = function(callback) {
-  if (localStorage.rawData) {
+  Entry.fetchAll = function(next) {
+    webDB.execute('SELECT * FROM entries ORDER BY publishedOn DESC', function(rows) {
+      if (rows.length) {
+        Entry.loadAll(rows);
+        next();
+      } else {
+        $.getJSON('/data/entryData.json', function(rawData) {
+          // Cache the json, so we don't need to request it next time:
+          rawData.forEach(function(item) {
+            var entry = new entry(item); // Instantiate an article based on item from JSON
+            entry.insertRecord(); // Cache the article in DB
+          });
+          webDB.execute('SELECT * FROM entries', function(rows) {
+            Entry.loadAll(rows);
+            next();
+          });
+        });
+      }
+    });
+  };
 
-  Diary.loadAll(JSON.parse(localStorage.entryData));
-  diaryView.initIndexPage();
- } else {
-$.getJSON('entryData.json', function(entryData) {
-  Article.loadAll(entryData);
-  localStorage.rawData = JSON.stringify(entryData);
-  callback();
-  });
- };
-};
-Article.numWordsAll = function() {
-  return Article.all.map(function(article) {
-    var words = article.body.split(' ');
-    return words.length;
-  }).reduce(function(a, b) {
-    return a+b
-    console.log(a+b)
-  })
-};
-
-module.Diary = Diary
+  module.Article = Article;
 })(window);
-console.log(Diary.all)
