@@ -1,0 +1,12 @@
+img {
+  max-width: 30%;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 10em;
+}
+
+h1 {
+  color: green;
+}

@@ -11,17 +11,26 @@
     <link rel="stylesheet" href="styles/layout.css">
 
     <script id="entries-template" type="text/x-handlebars-template"></script>
-     <article class="clearfix" data-subject="{{subject}}" data-date="{{date}}">
-  <body>
-    <main>
+     <article class="clearfix" data-subject="{{publishedOn}}" data-date="{{subject}}">
+       <body>
         <header>
-          <h1>
-            William J. Richardson
-          </h1>
-          <p></p>
+          <h1>William J. Richardson</h1>
         </header>
+        <img src="img/SilverStar.jpg"/>
+        <!-- <section class="entry-content">{{{content}}}</entry> -->
+        <!-- <a href="#" class="read-on">Read on &rarr;</a> -->
+     </article>
+   </script>
+ </head>
+ <body>
+    <header class="site-header clearfix">
+      <section class="heading-group-h1">
+        <h1>
+          Welcome to my Blog and Portfolio!
+        </h1>
+      </section>
         <nav class="main-nav"
-          <div class=
+          <div class="icon-menu"></div>
           <ul>
             <li class="tab" data-content="entries"><a href="#" class="icon-home3">Home</a></li>
             <li class="tab" data-content="about"><a href="#" class="icon-address-book">My Bio</a></li>
@@ -29,26 +38,53 @@
             <li><a href="http://www.transplantliving.org/william-richardson/">Social History</a></li>
           </ul>
         </nav>
+      </header>
+          <main>
+         <section id="entries" class="tab-content">
+           <div>
+             <ul id="filters">
+               <li>
+                <select id="subject-filter">
+                  <option value="">-- Search by Subject --</option>
+                </select>
+               </li>
+               <li>
+                 <select id="publishedOn-filter">
+                   <option value="">-- Search by Date --</option>
+                 </select>
+               </li>
+             </ul>
+           </div>
+         </section>
+         <section id="about" class="tab-content">
+         </section>
+          <header>
+          </header>
         <section id="jobs">
           <article class="template" data-category="cat">
             <header>
-              <h1>Title</h1>
+              <h1></h1>
               <div class="Personal Interests">
-                <address><a href=http://www.letsrun.com/>Favorite Running Site</a></address>
+                <address><a href=http://www.letsrun.com/>There is more to life than work!</a></address>
               </div>
             </header>
             <section class="article-body"></section>
           </article>
-        </section>
-      </div>
-    </main>
-    <footer>
-    </footer>
-     <script src = "scripts/article.js"></script>
-     <script src = "scripts/blogArticles.js"></script>
-     <script src = "scripts/portfolio.js"></script>
-     <script src = "scripts/articleView.js"></script>
-     <script src = "https://code.jquery.com/jquery-2.1.4.min.js"></script>
-     <script src = "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
-    </body>
+     </main>
+     <footer>
+       Portfolio for William Richardson
+     </footer>
+     <script src ="vendor/scripts/jquery-2.1.4.js"></script>
+     <script src ="vendor/scripts/handlebars.js"></script>
+     <script src ="vendor/scripts/marked.js"></script>
+     <script src ="scripts/webdb.js"></script>
+     <script src ="scripts/entriesController.js"></script>
+     <script src ="vendor/scripts/page.js"></script>
+     <script src ="scripts/article.js"></script>
+     <script src ="scripts/blogArticles.js"></script>
+     <script src ="scripts/aboutController.js"></script>
+     <script src ="scripts/portfolio.js"></script>
+     <script src ="scripts/articleView.js"></script>
+     <script src ="scripts/routes.js"></script>
+  </body>
 </html>
