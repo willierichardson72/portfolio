@@ -1,1 +1,1 @@
-githubToken.js;
+var githubToken = '786a3d20fb56017402d261cb9a04b0b72279e8d1'
